@@ -91,7 +91,6 @@ const ToggleLink = styled.p`
 const ErrorMessage = styled.p`
   color: #dc3545;
 `;
-const hcaptchaSiteKey = "4bdad71e-18ca-45b0-a5d4-e1284decd28e";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true); // Toggle between login and signup
@@ -140,23 +139,8 @@ const Login = () => {
     }
   };
 
-  const handleHCaptchaVerify = async (token) => {
-    try {
-      setHCaptchaToken(token);
-      const response = await axios.post(
-        "https://api.hcaptcha.com/siteverify",
-        null,
-        {
-          params: {
-            response: token,
-            secret: "ES_b9e001502f5a4da58fd4cace2c8859e6",
-          },
-        }
-      );
-      console.log("HCaptcha verification response:", response.data);
-    } catch (error) {
-      console.error("Error verifying hCaptcha:", error);
-    }
+  const handleHCaptchaVerify = (token) => {
+    setHCaptchaToken(token);
   };
 
   return (

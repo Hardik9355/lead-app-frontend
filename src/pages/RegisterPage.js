@@ -1,17 +1,17 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import API from '../api';
-import Layout from '../components/Layout';
+import React from "react";
+import { useForm } from "react-hook-form";
+import API from "../api";
+import Layout from "../components/Layout";
 
 const RegisterPage = () => {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data) => {
     try {
-      const response = await API.post('/auth/register', data);
-      localStorage.setItem('token', response.data.token);
+      const response = await API.post("/auth/register", data);
+      localStorage.setItem("token", response.data.token);
     } catch (error) {
-      console.error('Error registering:', error);
+      console.error("Error registering:", error);
     }
   };
 
@@ -20,10 +20,10 @@ const RegisterPage = () => {
       <h1>Register</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label>Email</label>
-        <input type="email" {...register('email', { required: true })} />
+        <input type="email" {...register("email", { required: true })} />
 
         <label>Password</label>
-        <input type="password" {...register('password', { required: true })} />
+        <input type="password" {...register("password", { required: true })} />
 
         <button type="submit">Register</button>
       </form>

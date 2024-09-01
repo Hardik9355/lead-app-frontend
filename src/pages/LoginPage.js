@@ -101,7 +101,6 @@ const Login = () => {
   const navigate = useNavigate();
 
   const onSubmitLogin = async (data) => {
-    console.log(data);
     if (!hCaptchaToken) {
       setError("Please complete the hCaptcha.");
       return;
@@ -109,7 +108,6 @@ const Login = () => {
     setLoading(true);
     try {
       const response = await API.post("/loginuser", { ...data, hCaptchaToken });
-      console.log(response.status, "this is my status");
       if (response.status === 200) {
         localStorage.setItem("token", response.data.data);
         window.location.href = "/dashboard"; // Example redirect
@@ -142,7 +140,6 @@ const Login = () => {
   };
 
   const handleHCaptchaVerify = (token) => {
-    console.log(token, "qjoisjqo");
     setHCaptchaToken(token);
   };
 
@@ -184,7 +181,6 @@ const Login = () => {
               </CheckboxLabel>
             </FormGroup>
             <FormGroup>
-            console.log(hcaptchaSiteKey)
               <HCaptcha
                 sitekey="4bdad71e-18ca-45b0-a5d4-e1284decd28e"
                 onVerify={handleHCaptchaVerify}
@@ -199,7 +195,6 @@ const Login = () => {
               ) : (
                 "Signup"
               )}
-
             </Button>
             <ToggleLink onClick={() => setIsLogin(!isLogin)}>
               {isLogin

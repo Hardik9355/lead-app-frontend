@@ -114,7 +114,7 @@ const EditLead = ({ lead, onCancel, onSave }) => {
       await API.put("/updatelead", body);
 
       reset();
-      onSave(); 
+      onSave();
       onCancel();
     } catch (error) {
       console.error("Error updating lead:", error);

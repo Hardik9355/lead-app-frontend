@@ -4,7 +4,6 @@ import {
   FormDetails,
   SubmitButton,
   CreateLeadContainer,
-  
 } from "./CreateLead";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
@@ -27,7 +26,6 @@ const ToggleLink = styled.p`
     text-decoration: underline;
   }
 `;
-
 
 export const FormWrapper = styled.div`
   display: flex;
@@ -58,7 +56,6 @@ const Title = styled.h2`
   margin-bottom: 20px;
 `;
 
-
 const Input = styled.input`
   width: 80%;
   padding: 12px;
@@ -67,10 +64,6 @@ const Input = styled.input`
   margin-top: 8px;
   font-size: 16px;
 `;
-
-
-
-
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -118,14 +111,11 @@ const ForgotPassword = () => {
 
                   <ButtonGroup>
                     <SubmitButton type="submit">Submit</SubmitButton>
-
                   </ButtonGroup>
-
                 </FormDetails>
               </FormContainer>
             </CreateLeadContainer>
-            <ToggleLink onClick={() => navigate('/login')} > Login</ToggleLink>
-
+            <ToggleLink onClick={() => navigate("/login")}> Login</ToggleLink>
           </Form>
         </FormWrapper>
       </Container>

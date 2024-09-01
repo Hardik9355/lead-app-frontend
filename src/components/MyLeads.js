@@ -213,19 +213,20 @@ const MyLeads = () => {
             onChange={(e) => setSearchText(e.target.value)}
           />
         </div>
-        <div>        <CustomSelect
-          value={selectedOption}
-          onChange={(e) => setSelectedOption(e.target.value)}
-        >
-          <option value="">Sort</option>
-          {options.map((option, index) => (
-            <option key={index} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </CustomSelect>
+        <div>
+          {" "}
+          <CustomSelect
+            value={selectedOption}
+            onChange={(e) => setSelectedOption(e.target.value)}
+          >
+            <option value="">Sort</option>
+            {options.map((option, index) => (
+              <option key={index} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </CustomSelect>
         </div>
-
       </ButtonWrapper>
 
       {editingLead ? (
@@ -244,7 +245,6 @@ const MyLeads = () => {
                 <LeadTitle>Email:{lead.email}</LeadTitle>
                 <LeadTitle>Product:{lead.product}</LeadTitle>
 
-          
                 <ButtonWrapper>
                   {" "}
                   <EditButton onClick={() => handleEditClick(lead)}>

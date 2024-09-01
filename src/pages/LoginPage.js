@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form";
 import API from "../api";
 import Layout from "../components/Layout";
 import { AiOutlineLoading } from "react-icons/ai";
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate } from "react-router-dom";
+import HCaptcha from "react-hcaptcha";
 
 export const Container = styled.div`
   display: flex;
@@ -90,19 +90,25 @@ const ToggleLink = styled.p`
 const ErrorMessage = styled.p`
   color: #dc3545;
 `;
+const hcaptchaSiteKey = "4bdad71e-18ca-45b0-a5d4-e1284decd28e";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true); // Toggle between login and signup
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [hCaptchaToken, setHCaptchaToken] = useState(null);
   const navigate = useNavigate();
 
-
   const onSubmitLogin = async (data) => {
+    console.log(data);
+    if (!hCaptchaToken) {
+      setError("Please complete the hCaptcha.");
+      return;
+    }
     setLoading(true);
     try {
-      const response = await API.post("/loginuser", data);
+      const response = await API.post("/loginuser", { ...data, hCaptchaToken });
       console.log(response.status, "this is my status");
       if (response.status === 200) {
         localStorage.setItem("token", response.data.data);
@@ -119,22 +125,25 @@ const Login = () => {
   };
 
   const onSubmitSignup = async (data) => {
-
     try {
       const response = await API.post("/createuser", data);
-     
 
       if (response.data.code === 200) {
         // Adjust based on your API response
         setIsLogin(true);
-        navigate('/login');
+        navigate("/login");
 
-         // Switch to login form after successful signup
+        // Switch to login form after successful signup
       }
     } catch (error) {
       console.error("Error signing up:", error);
       setError("Error signing up"); // General error message
     }
+  };
+
+  const handleHCaptchaVerify = (token) => {
+    console.log(token, "qjoisjqo");
+    setHCaptchaToken(token);
   };
 
   return (
@@ -174,14 +183,33 @@ const Login = () => {
                 Remember me
               </CheckboxLabel>
             </FormGroup>
+            <FormGroup>
+            console.log(hcaptchaSiteKey)
+              <HCaptcha
+                sitekey="4bdad71e-18ca-45b0-a5d4-e1284decd28e"
+                onVerify={handleHCaptchaVerify}
+              />
+            </FormGroup>
             {error && <ErrorMessage>{error}</ErrorMessage>}
-            <Button type="submit">{loading ? <AiOutlineLoading style={{ marginRight: '8px' }} />: isLogin ? "Login" : "Signup"}</Button>
+            <Button type="submit">
+              {loading ? (
+                <AiOutlineLoading style={{ marginRight: "8px" }} />
+              ) : isLogin ? (
+                "Login"
+              ) : (
+                "Signup"
+              )}
+
+            </Button>
             <ToggleLink onClick={() => setIsLogin(!isLogin)}>
               {isLogin
                 ? "Need an account? Sign up"
                 : "Already have an account? Log in"}
             </ToggleLink>
-            <ToggleLink onClick={() => navigate('/forgot-password')} > Forgot Password</ToggleLink>
+            <ToggleLink onClick={() => navigate("/forgot-password")}>
+              {" "}
+              Forgot Password
+            </ToggleLink>
           </Form>
         </FormWrapper>
       </Container>

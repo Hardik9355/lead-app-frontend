@@ -6,6 +6,7 @@ import Layout from "../components/Layout";
 import { AiOutlineLoading } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import HCaptcha from "react-hcaptcha";
+import axios from "axios";
 
 export const Container = styled.div`
   display: flex;
@@ -139,8 +140,23 @@ const Login = () => {
     }
   };
 
-  const handleHCaptchaVerify = (token) => {
-    setHCaptchaToken(token);
+  const handleHCaptchaVerify = async (token) => {
+    try {
+      setHCaptchaToken(token);
+      const response = await axios.post(
+        "https://api.hcaptcha.com/siteverify",
+        null,
+        {
+          params: {
+            response: token,
+            secret: "ES_b9e001502f5a4da58fd4cace2c8859e6",
+          },
+        }
+      );
+      console.log("HCaptcha verification response:", response.data);
+    } catch (error) {
+      console.error("Error verifying hCaptcha:", error);
+    }
   };
 
   return (

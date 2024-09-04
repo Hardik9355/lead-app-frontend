@@ -124,15 +124,14 @@ const Login = () => {
 
   const onSubmitSignup = async (data) => {
     try {
-      const response = await API.post("/createuser", data);
+      await API.post("/createuser", data);
 
-      if (response.data.code === 200) {
+     
         // Adjust based on your API response
         setIsLogin(true);
         navigate("/login");
 
         // Switch to login form after successful signup
-      }
     } catch (error) {
       console.error("Error signing up:", error);
       setError("Error signing up"); // General error message
